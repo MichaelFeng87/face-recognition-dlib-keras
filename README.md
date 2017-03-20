@@ -5,10 +5,10 @@ Face recognition script using the combination of dlib and keras library to detec
 # Requirements
 Reminder : You need CUDA-supported GPU to run this, otherwise enjoy the very low FPS~
 
-1. dlib
-2. keras
-3. tensorflow-gpu
-4. h5py
+1. dlib >= 19.4.99
+2. keras >= 1.1.2
+3. tensorflow-gpu >= 1.0.1
+4. h5py >= 2.6.0
 
 How to use it :
 
