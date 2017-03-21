@@ -34,13 +34,20 @@ test_data_ratio=0.33
 
 # The output directory of the trained neural net model
 nn_model_dir='nn_model/'
+# hdf5_filename = 'face_recog_weights.hdf5'
+# json_filename = 'face_recog_arch.json'
+# labeldict_filename = 'label_dict.pkl'
+
+hdf5_filename = 'face_recog_special_weights.hdf5'
+json_filename = 'face_recog_special_arch.json'
+labeldict_filename = 'label_dict_special.pkl'
 
 # DLIB's model path for face pose predictor and deep neural network model
 predictor_path='dlib_model/shape_predictor_68_face_landmarks.dat'
 face_rec_model_path='dlib_model/dlib_face_recognition_resnet_model_v1.dat'
 
 # The input directory of positive and negative person's facial data
-pos_image_dir='authorized_person/'
+pos_image_dir='target_person/'
 neg_image_dir='unknown_person/'
 
 
@@ -100,13 +107,13 @@ def train_model(model,
 				test_label,
 				nb_epoch=100):
 	
-	checkpointer = ModelCheckpoint(filepath=nn_model_dir+'face_recog_weights.hdf5',
+	checkpointer = ModelCheckpoint(filepath=nn_model_dir+hdf5_filename,
 								   verbose=1,
 								   save_best_only=True)
 
 	cnn_json_model = model.to_json()
 
-	with open(nn_model_dir+'face_recog_arch.json', "w") as json_file:
+	with open(nn_model_dir+json_filename, "w") as json_file:
 		json_file.write(cnn_json_model)
 	
 	print("Saved CNN architecture to disk..")
@@ -137,13 +144,13 @@ print 'Building neural network architecture...'
 if not continue_training:
 	cnn_model = make_model(nb_class)
 else:
-	json_model_file=open(nn_model_dir+'face_recog_arch.json', 'r')
+	json_model_file=open(nn_model_dir+json_filename, 'r')
 	json_model = json_model_file.read()
 	json_model_file.close()
 
 	cnn_model = model_from_json(json_model)
 
-	cnn_model.load_weights(nn_model_dir+'face_recog_weights.hdf5')
+	cnn_model.load_weights(nn_model_dir+hdf5_filename)
 
 	cnn_model.compile(loss=loss,
 				  optimizer=optimizer,
@@ -179,7 +186,7 @@ print 'Finished...'
 
 print 'Processing UNKNOWN person data'
 label_dict[class_counter]='UNKNOWN'
-joblib.dump(label_dict,nn_model_dir+'label_dict.pkl')
+joblib.dump(label_dict,nn_model_dir+labeldict_filename)
 if not use_preprocessed_neg_data:
 	stranger_list = os.listdir(neg_image_dir+'raw_data/')
 

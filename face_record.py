@@ -9,13 +9,6 @@ import os
 from sklearn.model_selection import train_test_split
 import numpy as np
 from sklearn.externals import joblib
-from keras.models import Sequential, model_from_json
-from keras import backend as K
-from keras.layers.core import Dense, Dropout, Activation, Flatten
-from keras.layers.convolutional import Convolution2D, MaxPooling2D
-from keras.callbacks import ModelCheckpoint
-from keras.utils import np_utils
-from keras.optimizers import SGD
 import time
 import shutil
 
