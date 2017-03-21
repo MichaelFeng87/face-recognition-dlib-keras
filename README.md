@@ -27,4 +27,4 @@ How to use it :
 
 7. Train the neural network model by running the face_train_model.py
 
-8. Run the face_detect_record.py
+8. Run the face_detect_recog.py
